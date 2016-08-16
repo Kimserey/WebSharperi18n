@@ -17356,7 +17356,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
    Client:{
     main:Runtime.Field(function()
     {
-     var currentLanguage,makeTranslationButton,list,x,translations,arg201,copyOfStruct;
+     var currentLanguage,makeTranslationButton,mapping,list,x,translations,arg201,copyOfStruct;
      currentLanguage=Var.Create("fr");
      makeTranslationButton=function(translate,code)
      {
@@ -17368,13 +17368,14 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       };
       return Doc.Button("",List.ofArray([AttrProxy.Create("style","margin: 1em;"),AttrProxy.Create("data-translate",translate)]),arg20);
      };
-     list=Internationalization.Core.Languages.list;
-     x=List.map(function(lg)
+     mapping=function(lg)
      {
       return[lg.Name,{
        translation:lg.Translation
       }];
-     },list);
+     };
+     list=Internationalization.Configurations.i18n.languages();
+     x=List.map(mapping,list);
      translations=Pervasives.NewFromList(x);
      arg201=List.ofArray([Doc.TextNode("Current language: "),Doc.TextView(currentLanguage.get_View())]);
      Doc.RunById("main",Doc.Element("h1",[],arg201));

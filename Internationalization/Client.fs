@@ -14,7 +14,7 @@ module Client =
 
     type Elements = Templating.Template<"i18n-elements-tpl.html">
 
-    [<Inline "Internationalization.Core.Languages.list">]
+    [<Inline "Internationalization.Configurations.i18n.languages()">]
     let languages = X<Language list>
 
     let main =
