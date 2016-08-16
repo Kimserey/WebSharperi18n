@@ -137,11 +137,11 @@ module Client =
           Translation = 
             { Nav = 
                 { Home = "Accueil"
-                  Page1 = "Première page"
-                  Page2 = "Deuxième page" }
+                  Page1 = "Premiere page"
+                  Page2 = "Deuxieme page" }
               Button = 
                 { English = "Anglais";
-                  French = "Français"
+                  French = "Francais"
                   Welsh = "Gallois" } } }
 
         { Name = "cy"
@@ -157,24 +157,29 @@ module Client =
     ]
 
     let main =
+        let currentLanguage = Var.Create "fr"
+        
         let makeTranslationButton translate code =
             Doc.Button "" 
-                [ Attr.Create "data-translate" translate ] 
-                (fun () -> Localizer.Localize(code))
+                [ attr.style "margin: 1em;"; Attr.Create "data-translate" translate ] 
+                (fun () -> 
+                    currentLanguage.Value <- code
+                    Localizer.Localize(code))
         
         let translations =
             languages
             |> List.map (fun lg -> lg.Name => New [ "translation" => lg.Translation ])
             |> New
+            
+        h1 [ text "Current language: "; Doc.TextView currentLanguage.View ]
+        |> Doc.RunById "main"
 
         divAttr 
             [ on.afterRender(fun e -> 
                 Localizer.Init(translations)
-                Localizer.Localize("fr")
+                Localizer.Localize(currentLanguage.Value)
               ) ]
-            [ div [ makeTranslationButton "Button.English" "en-GB" ]
-              div [ makeTranslationButton "Button.French" "fr" ]
-              div [ makeTranslationButton "Button.Welsh" "cy" ] ]
+            [ makeTranslationButton "Button.English" "en-GB"; makeTranslationButton "Button.French" "fr"; makeTranslationButton "Button.Welsh" "cy" ]
         |> Doc.RunById "main"
 
         Elements.Date.Doc(
@@ -182,3 +187,9 @@ module Client =
             format = "dddd, MMMM Do YYYY, h:mm:ss a"
         )
         |> Doc.RunById "date-test"
+        
+        Elements.Number.Doc(
+            number = "100000000.02",
+            format = "0,0.0"
+        )
+        |> Doc.RunById "number-test"

@@ -17250,7 +17250,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
 ;
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime,List,Internationalization,Localizer,UI,Next,Doc,AttrProxy,Client,JavaScript,Pervasives,AttrModule,Date,String;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,List,UI,Next,Var,Var1,Internationalization,Localizer,Doc,AttrProxy,Client,JavaScript,Pervasives,AttrModule,Date,String;
  Runtime.Define(Global,{
   Internationalization:{
    Client:{
@@ -17261,8 +17261,8 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       Translation:{
        Nav:{
         Home:"Home",
-        Page1:"Page one",
-        Page2:"Page two"
+        Page1:"First page",
+        Page2:"Second page"
        },
        Button:{
         English:"English",
@@ -17275,12 +17275,12 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       Translation:{
        Nav:{
         Home:"Accueil",
-        Page1:"Premi\ufffdre page",
-        Page2:"Deuxi\ufffdme page"
+        Page1:"Premiere page",
+        Page2:"Deuxieme page"
        },
        Button:{
         English:"Anglais",
-        French:"Fran\ufffdais",
+        French:"Francais",
         Welsh:"Gallois"
        }
       }
@@ -17289,7 +17289,7 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       Translation:{
        Nav:{
         Home:"Croeso",
-        Page1:"Tudalen flaen",
+        Page1:"Tudalen gyntaf",
         Page2:"Ail dudalen"
        },
        Button:{
@@ -17302,15 +17302,17 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
     }),
     main:Runtime.Field(function()
     {
-     var makeTranslationButton,mapping,list,x,translations,arg201,arg202,arg203,copyOfStruct;
+     var currentLanguage,makeTranslationButton,mapping,list,x,translations,arg201,copyOfStruct;
+     currentLanguage=Var.Create("fr");
      makeTranslationButton=function(translate,code)
      {
       var arg20;
       arg20=function()
       {
+       Var1.Set(currentLanguage,code);
        return Localizer.Localize(code);
       };
-      return Doc.Button("",List.ofArray([AttrProxy.Create("data-translate",translate)]),arg20);
+      return Doc.Button("",List.ofArray([AttrProxy.Create("style","margin: 1em;"),AttrProxy.Create("data-translate",translate)]),arg20);
      };
      mapping=function(lg)
      {
@@ -17321,16 +17323,16 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
      list=Client.languages();
      x=List.map(mapping,list);
      translations=Pervasives.NewFromList(x);
-     arg201=List.ofArray([makeTranslationButton("Button.English","en-GB")]);
-     arg202=List.ofArray([makeTranslationButton("Button.French","fr")]);
-     arg203=List.ofArray([makeTranslationButton("Button.Welsh","cy")]);
      Doc.RunById("main",Doc.Element("div",List.ofArray([AttrModule.OnAfterRender(function()
      {
       Localizer.Init(translations);
-      return Localizer.Localize("fr");
-     })]),List.ofArray([Doc.Element("div",[],arg201),Doc.Element("div",[],arg202),Doc.Element("div",[],arg203)])));
+      return Localizer.Localize(Var.Get(currentLanguage));
+     })]),List.ofArray([makeTranslationButton("Button.English","en-GB"),makeTranslationButton("Button.French","fr"),makeTranslationButton("Button.Welsh","cy")])));
+     arg201=List.ofArray([Doc.TextNode("Current language: "),Doc.TextView(currentLanguage.get_View())]);
+     Doc.RunById("main",Doc.Element("h1",[],arg201));
      copyOfStruct=Date.now();
-     return Doc.RunById("date-test",Doc.Concat([Doc.Element("span",[AttrProxy.Create("data-translate-date",String(copyOfStruct)),AttrProxy.Create("data-translate-date-format","dddd, MMMM Do YYYY, h:mm:ss a")],[])]));
+     Doc.RunById("date-test",Doc.Concat([Doc.Element("span",[AttrProxy.Create("data-translate-date",String(copyOfStruct)),AttrProxy.Create("data-translate-date-format","dddd, MMMM Do YYYY, h:mm:ss a")],[])]));
+     return Doc.RunById("number-test",Doc.Concat([Doc.Element("span",[AttrProxy.Create("data-translate-numeric","100000000.02"),AttrProxy.Create("data-translate-numeric-format","0,0.0")],[])]));
     })
    },
    Localizer:Runtime.Class({},{
@@ -17423,10 +17425,12 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
  Runtime.OnInit(function()
  {
   List=Runtime.Safe(Global.WebSharper.List);
-  Internationalization=Runtime.Safe(Global.Internationalization);
-  Localizer=Runtime.Safe(Internationalization.Localizer);
   UI=Runtime.Safe(Global.WebSharper.UI);
   Next=Runtime.Safe(UI.Next);
+  Var=Runtime.Safe(Next.Var);
+  Var1=Runtime.Safe(Next.Var1);
+  Internationalization=Runtime.Safe(Global.Internationalization);
+  Localizer=Runtime.Safe(Internationalization.Localizer);
   Doc=Runtime.Safe(Next.Doc);
   AttrProxy=Runtime.Safe(Next.AttrProxy);
   Client=Runtime.Safe(Internationalization.Client);
