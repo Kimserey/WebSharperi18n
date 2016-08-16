@@ -111,6 +111,13 @@
       <Private>True</Private>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Internationalization.Core\Internationalization.Core.fsproj">
+      <Name>Internationalization.Core</Name>
+      <Project>{67fb4f9d-87ff-4347-9adb-8cb79398c582}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
   <!-- F# targets -->
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '11.0'">

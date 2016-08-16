@@ -17223,6 +17223,106 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
  });
 }());
 
+(function()
+{
+ var Global=this,Runtime=this.IntelliFactory.Runtime;
+ Runtime.Define(Global,{
+  Internationalization:{
+   Core:{
+    Localizer:Runtime.Class({},{
+     Init:function($resources)
+     {
+      var $0=this,$this=this;
+      Global.i18next.init({
+       resources:$resources
+      },function(err)
+      {
+       if(err)
+        {
+         Global.console.error("Some unhandled errors occured while initiating i18next.");
+        }
+       Global.jqueryI18next.init(Global.i18next,Global.$,{
+        selectorAttr:"data-translate"
+       });
+      });
+     },
+     Localize:function($language)
+     {
+      var $0=this,$this=this;
+      var isNull=function(key)
+      {
+       return!key||typeof key==="undefined"||key===false;
+      };
+      var translate=function(translator)
+      {
+       var $el=translator.el;
+       var data=$el.data();
+       var value=translator.value(data);
+       if(isNull(value))
+        return;
+       var format=translator.format(data);
+       if(isNull(format))
+        return;
+       $el.text(translator.execute(value,format));
+      };
+      Global.moment.locale($language);
+      Global.numeral.language($language);
+      Global.i18next.changeLanguage($language,function(err)
+      {
+       if(err)
+        {
+         Global.console.error("Some unhandled errors occured while changing i18next language to "+$language+".");
+         return;
+        }
+       Global.$("body").localize();
+       Global.$("[data-translate-date]").each(function()
+       {
+        translate({
+         el:Global.$(this),
+         value:function(data)
+         {
+          return data.translateDate;
+         },
+         format:function(data)
+         {
+          return data.translateDateFormat||"YYYY-MM-DD";
+         },
+         execute:function(value,format)
+         {
+          return Global.moment(value).format(format);
+         }
+        });
+       });
+       Global.$("[data-translate-numeric]").each(function()
+       {
+        translate({
+         el:Global.$(this),
+         value:function(data)
+         {
+          return data.translateNumeric;
+         },
+         format:function(data)
+         {
+          return data.translateNumericFormat||"0,0.00";
+         },
+         execute:function(value,format)
+         {
+          return Global.numeral(value).format(format);
+         }
+        });
+       });
+      });
+     }
+    })
+   }
+  }
+ });
+ Runtime.OnLoad(function()
+ {
+  return;
+ });
+}());
+
 (function () {
     var lastTime = 0;
     var vendors = ['webkit', 'moz'];
@@ -17250,59 +17350,13 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
 ;
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime,List,UI,Next,Var,Var1,Internationalization,Localizer,Doc,AttrProxy,Client,JavaScript,Pervasives,AttrModule,Date,String;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,UI,Next,Var,Var1,Internationalization,Core,Localizer,Doc,List,AttrProxy,JavaScript,Pervasives,AttrModule,Date,String,Client;
  Runtime.Define(Global,{
   Internationalization:{
    Client:{
-    languages:Runtime.Field(function()
-    {
-     return List.ofArray([{
-      Name:"en-GB",
-      Translation:{
-       Nav:{
-        Home:"Home",
-        Page1:"First page",
-        Page2:"Second page"
-       },
-       Button:{
-        English:"English",
-        French:"French",
-        Welsh:"Welsh"
-       }
-      }
-     },{
-      Name:"fr",
-      Translation:{
-       Nav:{
-        Home:"Accueil",
-        Page1:"Premiere page",
-        Page2:"Deuxieme page"
-       },
-       Button:{
-        English:"Anglais",
-        French:"Francais",
-        Welsh:"Gallois"
-       }
-      }
-     },{
-      Name:"cy",
-      Translation:{
-       Nav:{
-        Home:"Croeso",
-        Page1:"Tudalen gyntaf",
-        Page2:"Ail dudalen"
-       },
-       Button:{
-        English:"Saesneg",
-        French:"Ffrangeg",
-        Welsh:"Cymraeg"
-       }
-      }
-     }]);
-    }),
     main:Runtime.Field(function()
     {
-     var currentLanguage,makeTranslationButton,mapping,list,x,translations,arg201,copyOfStruct;
+     var currentLanguage,makeTranslationButton,list,x,translations,arg201,copyOfStruct;
      currentLanguage=Var.Create("fr");
      makeTranslationButton=function(translate,code)
      {
@@ -17314,136 +17368,50 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       };
       return Doc.Button("",List.ofArray([AttrProxy.Create("style","margin: 1em;"),AttrProxy.Create("data-translate",translate)]),arg20);
      };
-     mapping=function(lg)
+     list=Internationalization.Core.Languages.list;
+     x=List.map(function(lg)
      {
       return[lg.Name,{
        translation:lg.Translation
       }];
-     };
-     list=Client.languages();
-     x=List.map(mapping,list);
+     },list);
      translations=Pervasives.NewFromList(x);
+     arg201=List.ofArray([Doc.TextNode("Current language: "),Doc.TextView(currentLanguage.get_View())]);
+     Doc.RunById("main",Doc.Element("h1",[],arg201));
      Doc.RunById("main",Doc.Element("div",List.ofArray([AttrModule.OnAfterRender(function()
      {
       Localizer.Init(translations);
       return Localizer.Localize(Var.Get(currentLanguage));
      })]),List.ofArray([makeTranslationButton("Button.English","en-GB"),makeTranslationButton("Button.French","fr"),makeTranslationButton("Button.Welsh","cy")])));
-     arg201=List.ofArray([Doc.TextNode("Current language: "),Doc.TextView(currentLanguage.get_View())]);
-     Doc.RunById("main",Doc.Element("h1",[],arg201));
      copyOfStruct=Date.now();
      Doc.RunById("date-test",Doc.Concat([Doc.Element("span",[AttrProxy.Create("data-translate-date",String(copyOfStruct)),AttrProxy.Create("data-translate-date-format","dddd, MMMM Do YYYY, h:mm:ss a")],[])]));
      return Doc.RunById("number-test",Doc.Concat([Doc.Element("span",[AttrProxy.Create("data-translate-numeric","100000000.02"),AttrProxy.Create("data-translate-numeric-format","0,0.0")],[])]));
     })
-   },
-   Localizer:Runtime.Class({},{
-    Init:function($resources)
-    {
-     var $0=this,$this=this;
-     Global.i18next.init({
-      resources:$resources
-     },function(err)
-     {
-      if(err)
-       {
-        Global.console.error("Some unhandled errors occured while initiating i18next.");
-       }
-      Global.jqueryI18next.init(Global.i18next,Global.$,{
-       selectorAttr:"data-translate"
-      });
-     });
-    },
-    Localize:function($language)
-    {
-     var $0=this,$this=this;
-     var isNull=function(key)
-     {
-      return!key||typeof key==="undefined"||key===false;
-     };
-     var translate=function(translator)
-     {
-      var $el=translator.el;
-      var data=$el.data();
-      var value=translator.value(data);
-      if(isNull(value))
-       return;
-      var format=translator.format(data);
-      if(isNull(format))
-       return;
-      $el.text(translator.execute(value,format));
-     };
-     Global.moment.locale($language);
-     Global.numeral.language($language);
-     Global.i18next.changeLanguage($language,function(err)
-     {
-      if(err)
-       {
-        Global.console.error("Some unhandled errors occured while changing i18next language to "+$language+".");
-        return;
-       }
-      Global.$("body").localize();
-      Global.$("[data-translate-date]").each(function()
-      {
-       translate({
-        el:Global.$(this),
-        value:function(data)
-        {
-         return data.translateDate;
-        },
-        format:function(data)
-        {
-         return data.translateDateFormat||"YYYY-MM-DD";
-        },
-        execute:function(value,format)
-        {
-         return Global.moment(value).format(format);
-        }
-       });
-      });
-      Global.$("[data-translate-numeric]").each(function()
-      {
-       translate({
-        el:Global.$(this),
-        value:function(data)
-        {
-         return data.translateNumeric;
-        },
-        format:function(data)
-        {
-         return data.translateNumericFormat||"0,0.00";
-        },
-        execute:function(value,format)
-        {
-         return Global.numeral(value).format(format);
-        }
-       });
-      });
-     });
-    }
-   })
+   }
   }
  });
  Runtime.OnInit(function()
  {
-  List=Runtime.Safe(Global.WebSharper.List);
   UI=Runtime.Safe(Global.WebSharper.UI);
   Next=Runtime.Safe(UI.Next);
   Var=Runtime.Safe(Next.Var);
   Var1=Runtime.Safe(Next.Var1);
   Internationalization=Runtime.Safe(Global.Internationalization);
-  Localizer=Runtime.Safe(Internationalization.Localizer);
+  Core=Runtime.Safe(Internationalization.Core);
+  Localizer=Runtime.Safe(Core.Localizer);
   Doc=Runtime.Safe(Next.Doc);
+  List=Runtime.Safe(Global.WebSharper.List);
   AttrProxy=Runtime.Safe(Next.AttrProxy);
-  Client=Runtime.Safe(Internationalization.Client);
   JavaScript=Runtime.Safe(Global.WebSharper.JavaScript);
   Pervasives=Runtime.Safe(JavaScript.Pervasives);
   AttrModule=Runtime.Safe(Next.AttrModule);
   Date=Runtime.Safe(Global.Date);
-  return String=Runtime.Safe(Global.String);
+  String=Runtime.Safe(Global.String);
+  return Client=Runtime.Safe(Internationalization.Client);
  });
  Runtime.OnLoad(function()
  {
   Client.main();
-  Client.languages();
   return;
  });
 }());
