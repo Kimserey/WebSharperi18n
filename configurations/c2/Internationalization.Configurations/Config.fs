@@ -8,9 +8,9 @@ module Configuration =
 
     let siteCustomizations = {
         Title = "Configuration 2 - Configuration Two"
-        Logo = "Content/ic_polymer.png"
-        LogoAffix = "Content/ic_polymer.png"
-        Splash = "Content/ic_polymer.png"
+        Logo = "Content/logo.png"
+        LogoAffix = "Content/logo.png"
+        Splash = "Content/logo.png"
         Css = "configurations/c2/theme.css"
     }
 
@@ -22,6 +22,3 @@ module Configuration =
        SiteCustomizations = siteCustomizations
        Constants = constants
     }
-
-    [<System.Web.UI.WebResource("ic_polymer.png", "image/png")>]
-    do ()

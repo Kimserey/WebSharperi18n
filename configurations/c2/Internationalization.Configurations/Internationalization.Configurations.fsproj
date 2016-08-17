@@ -58,6 +58,7 @@
     <EmbeddedResource Include="resources/ic_polymer.png" />
     <Compile Include="i18n.fs" />
     <Compile Include="Config.fs" />
+    <Compile Include="Resources.fs" />
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

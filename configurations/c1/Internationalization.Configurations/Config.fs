@@ -8,9 +8,9 @@ module Configuration =
     
     let siteCustomizations = {
         Title = "Configuration 1 - Configuration One"
-        Logo = "Content/ic_pause.png"
-        LogoAffix = "Content/ic_pause.png"
-        Splash = "Content/ic_pause.png"
+        Logo = "Content/logo.png"
+        LogoAffix = "Content/logo.png"
+        Splash = "Content/logo.png"
         Css = "configurations/c1/theme.css"
     }
 
