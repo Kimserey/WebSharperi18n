@@ -10,6 +10,11 @@ echo ===========================
 ::			Build projects
 ::------------------------------------------------
 
+if exist "Internationalization/Content" {
+	del "Internationalization/Content/*"
+}
+ 
+
 "C:\Program Files (x86)\MSBuild\14.0\bin\MSBuild.exe" /maxcpucount /verbosity:minimal /p:configuration=debug Internationalization.sln
 
 if errorlevel 1 (

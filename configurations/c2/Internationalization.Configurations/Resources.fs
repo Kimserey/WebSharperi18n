@@ -1,4 +1,4 @@
 ﻿namespace Internationalization.Configurations
 
-[<System.Web.UI.WebResource("ic_pause.png", "image/png")>]
+[<System.Web.UI.WebResource("logo.png", "image/png")>]
 do ()

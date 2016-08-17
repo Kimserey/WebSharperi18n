@@ -55,9 +55,10 @@
     <Error Condition="!Exists('..\..\..\packages\WebSharper.3.6.15.238\build\WebSharper.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\WebSharper.3.6.15.238\build\WebSharper.targets'))" />
   </Target>
   <ItemGroup>
-    <EmbeddedResource Include="resources/ic_pause.png" />
+    <EmbeddedResource Include="resources\logo.png" />
     <Compile Include="i18n.fs" />
     <Compile Include="Config.fs" />
+    <Compile Include="Resources.fs" />
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
