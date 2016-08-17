@@ -17,6 +17,11 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Internationalization.Config
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Internationalization.Core", "Internationalization.Core\Internationalization.Core.fsproj", "{67FB4F9D-87FF-4347-9ADB-8CB79398C582}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{1370F4CA-9D44-4675-9420-51C636EE803C}"
+	ProjectSection(SolutionItems) = preProject
+		Build.cmd = Build.cmd
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
