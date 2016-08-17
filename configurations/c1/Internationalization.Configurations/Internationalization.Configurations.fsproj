@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="i18n.fs" />
     <Content Include="packages.config" />
+    <None Include="ic_pause_circle_outline_black_24dp_2x.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />

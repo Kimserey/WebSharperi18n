@@ -14,9 +14,6 @@ module Client =
 
     type Elements = Templating.Template<"i18n-elements-tpl.html">
 
-    [<Inline "Internationalization.Configurations.i18n.languages()">]
-    let languages = X<Language list>
-
     let main =
         let currentLanguage = Var.Create "fr"
         
@@ -27,17 +24,12 @@ module Client =
                     currentLanguage.Value <- code
                     Localizer.Localize(code))
         
-        let translations =
-            languages
-            |> List.map (fun lg -> lg.Name => New [ "translation" => lg.Translation ])
-            |> New
-            
         h1 [ text "Current language: "; Doc.TextView currentLanguage.View ]
         |> Doc.RunById "main"
 
         divAttr 
             [ on.afterRender(fun e -> 
-                Localizer.Init(translations)
+                Localizer.Init()
                 Localizer.Localize(currentLanguage.Value)
               ) ]
             [ makeTranslationButton "Button.English" "en-GB"; makeTranslationButton "Button.French" "fr"; makeTranslationButton "Button.Welsh" "cy" ]

@@ -4,6 +4,14 @@ open System
 open WebSharper
 open WebSharper.JavaScript
 
+[<JavaScript; AutoOpen>]
+module Languages =
+    
+    /// Injects the configuration specific i18n file containing the languages translations.
+    [<Inline "Internationalization.Configurations.i18n.languages()">]
+    let languages = X<Language list>
+
+
 (**
     Provides i18n and l10n using i18next for interpolation,
     momentjs for dates and numeraljs for numbers.
@@ -14,6 +22,7 @@ open WebSharper.JavaScript
 **)
 [<JavaScript>]
 type Localizer =
+
 
     [<Direct """
         i18next.init({
@@ -29,6 +38,14 @@ type Localizer =
         });
     """>]
     static member Init (resources: obj) = X<unit>
+
+    static member Init () =
+        let resources = 
+            languages
+            |> List.map (fun lg -> lg.Name => New [ "translation" => lg.Translation ])
+            |> New
+
+        Localizer.Init resources
     
     [<Direct """
         var isNull = function(key) {

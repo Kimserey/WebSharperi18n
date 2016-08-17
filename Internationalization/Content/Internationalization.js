@@ -15757,12 +15757,26 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
 
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,Internationalization,List,JavaScript,Pervasives,Core,Localizer;
  Runtime.Define(Global,{
   Internationalization:{
    Core:{
     Localizer:Runtime.Class({},{
-     Init:function($resources)
+     Init:function()
+     {
+      var mapping,list,fields,resources;
+      mapping=function(lg)
+      {
+       return[lg.Name,{
+        translation:lg.Translation
+       }];
+      };
+      list=Internationalization.Configurations.i18n.languages();
+      fields=List.map(mapping,list);
+      resources=Pervasives.NewFromList(fields);
+      return Localizer.Init1(resources);
+     },
+     Init1:function($resources)
      {
       var $0=this,$this=this;
       Global.i18next.init({
@@ -15849,6 +15863,15 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
    }
   }
  });
+ Runtime.OnInit(function()
+ {
+  Internationalization=Runtime.Safe(Global.Internationalization);
+  List=Runtime.Safe(Global.WebSharper.List);
+  JavaScript=Runtime.Safe(Global.WebSharper.JavaScript);
+  Pervasives=Runtime.Safe(JavaScript.Pervasives);
+  Core=Runtime.Safe(Internationalization.Core);
+  return Localizer=Runtime.Safe(Core.Localizer);
+ });
  Runtime.OnLoad(function()
  {
   return;
@@ -15868,9 +15891,9 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        Name:"en-GB",
        Translation:{
         Nav:{
-         Home:"Home C2",
-         Page1:"First page C2",
-         Page2:"Second page C2"
+         Home:"Home C1",
+         Page1:"First page C1",
+         Page2:"Second page C1"
         },
         Button:{
          English:"English",
@@ -15882,9 +15905,9 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        Name:"fr",
        Translation:{
         Nav:{
-         Home:"Accueil C2",
-         Page1:"Premiere page C2",
-         Page2:"Deuxieme page C2"
+         Home:"Accueil C1",
+         Page1:"Premiere page C1",
+         Page2:"Deuxieme page C1"
         },
         Button:{
          English:"Anglais",
@@ -15896,9 +15919,9 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
        Name:"cy",
        Translation:{
         Nav:{
-         Home:"Croeso C2",
-         Page1:"Tudalen gyntaf C2",
-         Page2:"Ail dudalen C2"
+         Home:"Croeso C1",
+         Page1:"Tudalen gyntaf C1",
+         Page2:"Ail dudalen C1"
         },
         Button:{
          English:"Saesneg",
@@ -15953,13 +15976,13 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
 ;
 (function()
 {
- var Global=this,Runtime=this.IntelliFactory.Runtime,UI,Next,Var,Var1,Internationalization,Core,Localizer,Doc,List,AttrProxy,JavaScript,Pervasives,AttrModule,Date,String,Client;
+ var Global=this,Runtime=this.IntelliFactory.Runtime,UI,Next,Var,Var1,Internationalization,Core,Localizer,Doc,List,AttrProxy,AttrModule,Date,String,Client;
  Runtime.Define(Global,{
   Internationalization:{
    Client:{
     main:Runtime.Field(function()
     {
-     var currentLanguage,makeTranslationButton,mapping,list,x,translations,arg201,copyOfStruct;
+     var currentLanguage,makeTranslationButton,arg201,copyOfStruct;
      currentLanguage=Var.Create("fr");
      makeTranslationButton=function(translate,code)
      {
@@ -15971,20 +15994,11 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
       };
       return Doc.Button("",List.ofArray([AttrProxy.Create("style","margin: 1em;"),AttrProxy.Create("data-translate",translate)]),arg20);
      };
-     mapping=function(lg)
-     {
-      return[lg.Name,{
-       translation:lg.Translation
-      }];
-     };
-     list=Internationalization.Configurations.i18n.languages();
-     x=List.map(mapping,list);
-     translations=Pervasives.NewFromList(x);
      arg201=List.ofArray([Doc.TextNode("Current language: "),Doc.TextView(currentLanguage.get_View())]);
      Doc.RunById("main",Doc.Element("h1",[],arg201));
      Doc.RunById("main",Doc.Element("div",List.ofArray([AttrModule.OnAfterRender(function()
      {
-      Localizer.Init(translations);
+      Localizer.Init();
       return Localizer.Localize(Var.Get(currentLanguage));
      })]),List.ofArray([makeTranslationButton("Button.English","en-GB"),makeTranslationButton("Button.French","fr"),makeTranslationButton("Button.Welsh","cy")])));
      copyOfStruct=Date.now();
@@ -16006,8 +16020,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   Doc=Runtime.Safe(Next.Doc);
   List=Runtime.Safe(Global.WebSharper.List);
   AttrProxy=Runtime.Safe(Next.AttrProxy);
-  JavaScript=Runtime.Safe(Global.WebSharper.JavaScript);
-  Pervasives=Runtime.Safe(JavaScript.Pervasives);
   AttrModule=Runtime.Safe(Next.AttrModule);
   Date=Runtime.Safe(Global.Date);
   String=Runtime.Safe(Global.String);
