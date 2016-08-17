@@ -29,7 +29,7 @@ module Client =
 
         divAttr 
             [ on.afterRender(fun e -> 
-                Localizer.Init()
+                Localizer.Init languages
                 Localizer.Localize(currentLanguage.Value)
               ) ]
             [ makeTranslationButton "Button.English" "en-GB"; makeTranslationButton "Button.French" "fr"; makeTranslationButton "Button.Welsh" "cy" ]
@@ -46,3 +46,6 @@ module Client =
             format = "0,0.0"
         )
         |> Doc.RunById "number-test"
+
+        Portal.portal
+        |> Doc.RunById "main"

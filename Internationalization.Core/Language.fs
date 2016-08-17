@@ -1,6 +1,7 @@
 namespace Internationalization.Core
 
 open WebSharper
+open WebSharper.JavaScript
 
 type Language = {
     Name: string
@@ -20,3 +21,4 @@ and Button = {
     French: string
     Welsh: string
 }
+

@@ -55,9 +55,10 @@
     <Error Condition="!Exists('..\..\..\packages\WebSharper.3.6.15.238\build\WebSharper.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\WebSharper.3.6.15.238\build\WebSharper.targets'))" />
   </Target>
   <ItemGroup>
+    <EmbeddedResource Include="resources/ic_pause.png" />
     <Compile Include="i18n.fs" />
+    <Compile Include="Config.fs" />
     <Content Include="packages.config" />
-    <None Include="ic_pause_circle_outline_black_24dp_2x.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
@@ -67,6 +68,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Web" />
     <Reference Include="WebSharper.Collections">
       <HintPath>..\..\..\packages\WebSharper.3.6.15.238\lib\net40\WebSharper.Collections.dll</HintPath>
       <Private>True</Private>
