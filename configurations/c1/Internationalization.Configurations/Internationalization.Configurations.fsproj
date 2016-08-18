@@ -56,6 +56,9 @@
   </Target>
   <ItemGroup>
     <EmbeddedResource Include="resources\logo.png" />
+    <Compile Include="Languages.English.fs" />
+    <Compile Include="Languages.French.fs" />
+    <Compile Include="Languages.Welsh.fs" />
     <Compile Include="i18n.fs" />
     <Compile Include="Config.fs" />
     <Compile Include="Resources.fs" />
