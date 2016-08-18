@@ -34,8 +34,8 @@ if errorlevel 1 (
  ".\packages\WebSharper.UI.Next.3.6.15.211\lib\net40\WebSharper.UI.Next.dll"^
  ".\packages\WebSharper.UI.Next.3.6.15.211\lib\net40\WebSharper.UI.Next.Templating.dll"^
  ".\Internationalization.Core\bin\Debug\Internationalization.Core.dll"^
- ".\Configurations\%instance%\Internationalization.Configurations\bin\Debug\Internationalization.Configurations.dll"^
- ".\Internationalization\bin\Internationalization.dll"
+ ".\Internationalization\bin\Internationalization.dll"^
+ ".\configs\%instance%\bin\Debug\%instance%.dll"
  
  if errorlevel 1 (
   exit /b %errorlevel%

@@ -1,0 +1,9 @@
+.test {
+    background-color: darkseagreen;
+    color: white;
+    padding: 1em;
+    
+    &::after {
+        content: ' from client 1';
+    }
+}
