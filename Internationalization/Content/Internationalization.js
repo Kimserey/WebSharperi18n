@@ -15877,6 +15877,103 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
  });
 }());
 
+(function () {
+    var lastTime = 0;
+    var vendors = ['webkit', 'moz'];
+    for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+        window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+        window.cancelAnimationFrame =
+          window[vendors[x] + 'CancelAnimationFrame'] || window[vendors[x] + 'CancelRequestAnimationFrame'];
+    }
+
+    if (!window.requestAnimationFrame)
+        window.requestAnimationFrame = function (callback, element) {
+            var currTime = new Date().getTime();
+            var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+            var id = window.setTimeout(function () { callback(currTime + timeToCall); },
+              timeToCall);
+            lastTime = currTime + timeToCall;
+            return id;
+        };
+
+    if (!window.cancelAnimationFrame)
+        window.cancelAnimationFrame = function (id) {
+            clearTimeout(id);
+        };
+}());
+;
+(function()
+{
+ var Global=this,Runtime=this.IntelliFactory.Runtime,UI,Next,Var,Var1,Internationalization,Core,Localizer,Doc,List,AttrProxy,AttrModule,Date,String,Portal,Client;
+ Runtime.Define(Global,{
+  Internationalization:{
+   Client:{
+    main:Runtime.Field(function()
+    {
+     var currentLanguage,makeTranslationButton,arg201,copyOfStruct;
+     currentLanguage=Var.Create("en-GB");
+     makeTranslationButton=function(translate,code)
+     {
+      var arg20;
+      arg20=function()
+      {
+       Var1.Set(currentLanguage,code);
+       return Localizer.Localize(code);
+      };
+      return Doc.Button("",List.ofArray([AttrProxy.Create("style","margin: 1em;"),AttrProxy.Create("data-translate",translate)]),arg20);
+     };
+     arg201=List.ofArray([Doc.TextNode("Current language: "),Doc.TextView(currentLanguage.get_View())]);
+     Doc.RunById("main",Doc.Element("h1",[],arg201));
+     Doc.RunById("main",Doc.Element("div",List.ofArray([AttrModule.OnAfterRender(function()
+     {
+      Localizer.Init(Internationalization.Configurations.i18n.Languages.languages());
+      return Localizer.Localize(Var.Get(currentLanguage));
+     })]),List.ofArray([makeTranslationButton("Button.English","en-GB"),makeTranslationButton("Button.French","fr"),makeTranslationButton("Button.Welsh","cy")])));
+     copyOfStruct=Date.now();
+     Doc.RunById("date-test",Doc.Concat([Doc.Element("span",[AttrProxy.Create("data-translate-date",String(copyOfStruct)),AttrProxy.Create("data-translate-date-format","dddd, MMMM Do YYYY, h:mm:ss a")],[])]));
+     Doc.RunById("number-test",Doc.Concat([Doc.Element("span",[AttrProxy.Create("data-translate-numeric","100000000.02"),AttrProxy.Create("data-translate-numeric-format","0,0.0")],[])]));
+     return Doc.RunById("main",Portal.portal());
+    })
+   },
+   Portal:{
+    portal:Runtime.Field(function()
+    {
+     var Title,Logo,LogoAffix,Splash;
+     Title=Internationalization.Configurations.Configuration.config().SiteCustomizations.Title;
+     Logo=Internationalization.Configurations.Configuration.config().SiteCustomizations.Logo;
+     LogoAffix=Internationalization.Configurations.Configuration.config().SiteCustomizations.LogoAffix;
+     Splash=Internationalization.Configurations.Configuration.config().SiteCustomizations.Splash;
+     return Doc.Concat([Doc.Element("div",[],[Doc.TextNode(Title)]),Doc.TextNode("\n"),Doc.Element("div",[],[Doc.TextNode("Logo: "),Doc.Element("img",[AttrProxy.Create("src",Logo)],[])]),Doc.TextNode("\n"),Doc.Element("div",[],[Doc.TextNode("LogoAffix: "),Doc.Element("img",[AttrProxy.Create("src",LogoAffix)],[])]),Doc.TextNode("\n"),Doc.Element("div",[],[Doc.TextNode("Splash: "),Doc.Element("img",[AttrProxy.Create("src",Splash)],[])]),Doc.TextNode("\n"),Doc.Element("div",[AttrProxy.Create("class","test")],[Doc.TextNode("Css test")])]);
+    })
+   }
+  }
+ });
+ Runtime.OnInit(function()
+ {
+  UI=Runtime.Safe(Global.WebSharper.UI);
+  Next=Runtime.Safe(UI.Next);
+  Var=Runtime.Safe(Next.Var);
+  Var1=Runtime.Safe(Next.Var1);
+  Internationalization=Runtime.Safe(Global.Internationalization);
+  Core=Runtime.Safe(Internationalization.Core);
+  Localizer=Runtime.Safe(Core.Localizer);
+  Doc=Runtime.Safe(Next.Doc);
+  List=Runtime.Safe(Global.WebSharper.List);
+  AttrProxy=Runtime.Safe(Next.AttrProxy);
+  AttrModule=Runtime.Safe(Next.AttrModule);
+  Date=Runtime.Safe(Global.Date);
+  String=Runtime.Safe(Global.String);
+  Portal=Runtime.Safe(Internationalization.Portal);
+  return Client=Runtime.Safe(Internationalization.Client);
+ });
+ Runtime.OnLoad(function()
+ {
+  Portal.portal();
+  Client.main();
+  return;
+ });
+}());
+
 (function()
 {
  var Global=this,Runtime=this.IntelliFactory.Runtime,Internationalization,Configurations,Configuration,List,i18n,English,Welsh,French,Languages;
@@ -16000,103 +16097,6 @@ var JSON;JSON||(JSON={}),function(){"use strict";function i(n){return n<10?"0"+n
   Configuration.siteCustomizations();
   Configuration.constants();
   Configuration.config();
-  return;
- });
-}());
-
-(function () {
-    var lastTime = 0;
-    var vendors = ['webkit', 'moz'];
-    for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-        window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
-        window.cancelAnimationFrame =
-          window[vendors[x] + 'CancelAnimationFrame'] || window[vendors[x] + 'CancelRequestAnimationFrame'];
-    }
-
-    if (!window.requestAnimationFrame)
-        window.requestAnimationFrame = function (callback, element) {
-            var currTime = new Date().getTime();
-            var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-            var id = window.setTimeout(function () { callback(currTime + timeToCall); },
-              timeToCall);
-            lastTime = currTime + timeToCall;
-            return id;
-        };
-
-    if (!window.cancelAnimationFrame)
-        window.cancelAnimationFrame = function (id) {
-            clearTimeout(id);
-        };
-}());
-;
-(function()
-{
- var Global=this,Runtime=this.IntelliFactory.Runtime,UI,Next,Var,Var1,Internationalization,Core,Localizer,Doc,List,AttrProxy,AttrModule,Date,String,Portal,Client;
- Runtime.Define(Global,{
-  Internationalization:{
-   Client:{
-    main:Runtime.Field(function()
-    {
-     var currentLanguage,makeTranslationButton,arg201,copyOfStruct;
-     currentLanguage=Var.Create("en-GB");
-     makeTranslationButton=function(translate,code)
-     {
-      var arg20;
-      arg20=function()
-      {
-       Var1.Set(currentLanguage,code);
-       return Localizer.Localize(code);
-      };
-      return Doc.Button("",List.ofArray([AttrProxy.Create("style","margin: 1em;"),AttrProxy.Create("data-translate",translate)]),arg20);
-     };
-     arg201=List.ofArray([Doc.TextNode("Current language: "),Doc.TextView(currentLanguage.get_View())]);
-     Doc.RunById("main",Doc.Element("h1",[],arg201));
-     Doc.RunById("main",Doc.Element("div",List.ofArray([AttrModule.OnAfterRender(function()
-     {
-      Localizer.Init(Internationalization.Configurations.i18n.Languages.languages());
-      return Localizer.Localize(Var.Get(currentLanguage));
-     })]),List.ofArray([makeTranslationButton("Button.English","en-GB"),makeTranslationButton("Button.French","fr"),makeTranslationButton("Button.Welsh","cy")])));
-     copyOfStruct=Date.now();
-     Doc.RunById("date-test",Doc.Concat([Doc.Element("span",[AttrProxy.Create("data-translate-date",String(copyOfStruct)),AttrProxy.Create("data-translate-date-format","dddd, MMMM Do YYYY, h:mm:ss a")],[])]));
-     Doc.RunById("number-test",Doc.Concat([Doc.Element("span",[AttrProxy.Create("data-translate-numeric","100000000.02"),AttrProxy.Create("data-translate-numeric-format","0,0.0")],[])]));
-     return Doc.RunById("main",Portal.portal());
-    })
-   },
-   Portal:{
-    portal:Runtime.Field(function()
-    {
-     var Title,Logo,LogoAffix,Splash;
-     Title=Internationalization.Configurations.Configuration.config().SiteCustomizations.Title;
-     Logo=Internationalization.Configurations.Configuration.config().SiteCustomizations.Logo;
-     LogoAffix=Internationalization.Configurations.Configuration.config().SiteCustomizations.LogoAffix;
-     Splash=Internationalization.Configurations.Configuration.config().SiteCustomizations.Splash;
-     return Doc.Concat([Doc.Element("div",[],[Doc.TextNode(Title)]),Doc.TextNode("\n"),Doc.Element("div",[],[Doc.TextNode("Logo: "),Doc.Element("img",[AttrProxy.Create("src",Logo)],[])]),Doc.TextNode("\n"),Doc.Element("div",[],[Doc.TextNode("LogoAffix: "),Doc.Element("img",[AttrProxy.Create("src",LogoAffix)],[])]),Doc.TextNode("\n"),Doc.Element("div",[],[Doc.TextNode("Splash: "),Doc.Element("img",[AttrProxy.Create("src",Splash)],[])]),Doc.TextNode("\n"),Doc.Element("div",[AttrProxy.Create("class","test")],[Doc.TextNode("Css test")])]);
-    })
-   }
-  }
- });
- Runtime.OnInit(function()
- {
-  UI=Runtime.Safe(Global.WebSharper.UI);
-  Next=Runtime.Safe(UI.Next);
-  Var=Runtime.Safe(Next.Var);
-  Var1=Runtime.Safe(Next.Var1);
-  Internationalization=Runtime.Safe(Global.Internationalization);
-  Core=Runtime.Safe(Internationalization.Core);
-  Localizer=Runtime.Safe(Core.Localizer);
-  Doc=Runtime.Safe(Next.Doc);
-  List=Runtime.Safe(Global.WebSharper.List);
-  AttrProxy=Runtime.Safe(Next.AttrProxy);
-  AttrModule=Runtime.Safe(Next.AttrModule);
-  Date=Runtime.Safe(Global.Date);
-  String=Runtime.Safe(Global.String);
-  Portal=Runtime.Safe(Internationalization.Portal);
-  return Client=Runtime.Safe(Internationalization.Client);
- });
- Runtime.OnLoad(function()
- {
-  Portal.portal();
-  Client.main();
   return;
  });
 }());

@@ -1,9 +1,0 @@
-.test {
-    background-color: blue;
-    color: white;
-    padding: 1em;
-    
-    &::after {
-        content: ' from client 2';
-    }
-}
