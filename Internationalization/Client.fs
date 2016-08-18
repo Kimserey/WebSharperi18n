@@ -15,7 +15,7 @@ module Client =
     type Elements = Templating.Template<"i18n-elements-tpl.html">
 
     let main =
-        let currentLanguage = Var.Create "fr"
+        let currentLanguage = Var.Create "en-GB"
         
         let makeTranslationButton translate code =
             Doc.Button "" 

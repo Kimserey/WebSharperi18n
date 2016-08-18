@@ -108,6 +108,7 @@
   </Target>
   <ItemGroup>
     <Compile Include="Dependencies.fs" />
+    <Content Include="scss\app.scss" />
     <Compile Include="portal\Portal.fs" />
     <Content Include="portal\portal-tpl.html" />
     <Content Include="i18n-elements-tpl.html" />

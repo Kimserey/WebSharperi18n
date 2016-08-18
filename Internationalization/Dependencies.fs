@@ -18,5 +18,5 @@ module Dependencies =
     let config = X<Configuration>
 
     /// Injects the configuration specific i18n file containing the languages translations.
-    [<Inline "Internationalization.Configurations.i18n.languages()">]
+    [<Inline "Internationalization.Configurations.i18n.Languages.languages()">]
     let languages = X<Language list>

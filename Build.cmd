@@ -40,3 +40,9 @@ if errorlevel 1 (
  if errorlevel 1 (
   exit /b %errorlevel%
 )
+
+::------------------------------------------------
+::			Compile SCSS files
+::------------------------------------------------
+
+sass Internationalization\scss\app.scss Internationalization\css\app.css

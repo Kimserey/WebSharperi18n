@@ -55,7 +55,9 @@
     <Error Condition="!Exists('..\..\..\packages\WebSharper.3.6.15.238\build\WebSharper.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\WebSharper.3.6.15.238\build\WebSharper.targets'))" />
   </Target>
   <ItemGroup>
-    <EmbeddedResource Include="resources\logo.png" />
+    <EmbeddedResource Include="resources\_bootstrap.scss" />
+    <EmbeddedResource Include="resources\_theme.scss" />
+    <EmbeddedResource Include="resources\_variables.scss" />
     <Compile Include="Languages.English.fs" />
     <Compile Include="Languages.French.fs" />
     <Compile Include="Languages.Welsh.fs" />
@@ -63,6 +65,9 @@
     <Compile Include="Config.fs" />
     <Compile Include="Resources.fs" />
     <Content Include="packages.config" />
+    <EmbeddedResource Include="resources\ic_change_history_black_48dp_2x.png" />
+    <EmbeddedResource Include="resources\ic_donut_small_black_48dp_2x.png" />
+    <EmbeddedResource Include="resources\ic_settings_applications_black_48dp_2x.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
